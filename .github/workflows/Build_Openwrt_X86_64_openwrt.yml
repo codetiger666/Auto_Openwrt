@@ -29,7 +29,7 @@ env:
   UPLOAD_BIN_DIR: false
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
-  KERNEL_HASH: b70ee1516753f10c063dd361f74167d4
+  KERNEL_HASH: 57dcfbca1f3225678d24912f782b4e67
 
 # define workflow
 jobs:
