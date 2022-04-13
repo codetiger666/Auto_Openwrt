@@ -81,6 +81,7 @@ jobs:
       - name: Run Diy-Part1 Scripts
         run: |
           source scripts/BaseScripts.sh
+          mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
           cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
           cat>distfeeds.conf<<EOF
           src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/targets/x86/64/packages
