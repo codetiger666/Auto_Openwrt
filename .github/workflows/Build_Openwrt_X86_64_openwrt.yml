@@ -65,12 +65,14 @@ jobs:
           if (( $(echo "${version} == 21") & $(echo "${tag} == 02") )); then
               KERNEL_HASH=`curl https://downloads.openwrt.org/releases/$release/targets/x86/64/openwrt-$release-x86-64.manifest | grep kernel | awk -F "-" '{print $4}'`
           fi
+          echo "export openwrt_tag=$release" >> .profile
           echo "export DRIVE_LABLE=$DRIVE_LABLE" >> .profile
           echo "export KERNEL_HASH=$KERNEL_HASH" >> .profile
           source .profile
       - name: Clone Openwrt source code
         run: |
-          git clone -b openwrt-21.02 https://github.com/openwrt/openwrt.git
+          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}')
+          git clone -b v$release https://github.com/openwrt/openwrt.git
       - name: Update & Install Feeds
         run: |
           cd openwrt
@@ -79,6 +81,15 @@ jobs:
       - name: Run Diy-Part1 Scripts
         run: |
           source scripts/BaseScripts.sh
+          cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
+          cat>distfeeds.conf<<EOF
+          src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/targets/x86/64/packages
+          src/gz openwrt_base https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/base
+          src/gz openwrt_luci https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/luci
+          src/gz openwrt_packages https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/packages
+          src/gz openwrt_routing https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/routing
+          src/gz openwrt_telephony https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/telephony
+          EOF
           Diy-Part1
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
       - name: make defconfig
