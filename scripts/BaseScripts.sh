@@ -40,6 +40,13 @@ Diy-Part1() {
     fi
 }
 
+Diy-Part1-newifiD2() {
+    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files//usr/share/v2ray
+    cd $GITHUB_WORKSPACE/openwrt/package/base-files/files//usr/share/v2ray
+    wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+    wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+}
+
 Diy-Part2() {
     Date=`date "+%Y%m%d"`
 	mkdir bin/Firmware

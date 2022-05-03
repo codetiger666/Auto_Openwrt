@@ -75,6 +75,7 @@ jobs:
           source scripts/BaseScripts.sh
           Core_Newifi_D2
           Diy-Part1
+          Diy-Part1-newifiD2
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
       - name: make defconfig
         run: |
