@@ -82,16 +82,16 @@ jobs:
       - name: Run Diy-Part1 Scripts
         run: |
           source scripts/BaseScripts.sh
-          # mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
-          # cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
-          # cat>distfeeds.conf<<EOF
-          # src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/targets/x86/64/packages
-          # src/gz openwrt_base https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/base
-          # src/gz openwrt_luci https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/luci
-          # src/gz openwrt_packages https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/packages
-          # src/gz openwrt_routing https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/routing
-          # src/gz openwrt_telephony https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/telephony
-          # EOF
+          mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
+          cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/opkg
+          cat>distfeeds.conf<<EOF
+          src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/targets/x86/64/packages
+          src/gz openwrt_base https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/base
+          src/gz openwrt_luci https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/luci
+          src/gz openwrt_packages https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/packages
+          src/gz openwrt_routing https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/routing
+          src/gz openwrt_telephony https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/$release/packages/x86_64/telephony
+          EOF
           Diy-Part1
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
       - name: make defconfig
