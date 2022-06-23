@@ -57,6 +57,7 @@ jobs:
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
           sudo -E apt-get clean
+          sudo -E apt-get install dos2unix -y
           sudo -E apt-get -y autoremove --purge
           cd
           release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}')
@@ -113,6 +114,7 @@ jobs:
       - name: Compile the Openwrt
         working-directory: ./openwrt
         run: |
+          dos2unix *
           make -j4 V=s
       # - name: Run Diy-Part3 Scripts
       #   run: |
