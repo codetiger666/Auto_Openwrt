@@ -59,12 +59,20 @@ jobs:
           sudo -E apt-get clean
           sudo -E apt-get -y autoremove --purge
           cd
+          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}')
+          version=$(echo $release | awk -F "." '{print$1}')
+          tag=$(echo $release | awk -F "." '{print$2}')
+          if (( $(echo "${version} == 21") & $(echo "${tag} == 02") )); then
+              KERNEL_HASH=`curl https://downloads.openwrt.org/releases/$release/targets/ramips/mt7621/openwrt-$release-ramips-mt7621.manifest | grep kernel | awk -F "-" '{print $4}'`
+          fi
+          echo "export openwrt_tag=$release" >> .profile
           echo "export DRIVE_LABLE=$DRIVE_LABLE" >> .profile
           echo "export KERNEL_HASH=$KERNEL_HASH" >> .profile
           source .profile
       - name: Clone Openwrt source code
         run: |
-          git clone -b openwrt-21.02 https://github.com/openwrt/openwrt.git
+          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}')
+          git clone -b v$release https://github.com/openwrt/openwrt.git
       - name: Update & Install Feeds
         run: |
           cd openwrt
@@ -73,6 +81,7 @@ jobs:
       - name: Run Diy-Part1 Scripts
         run: |
           source scripts/BaseScripts.sh
+          source $HOME/.profile
           Core_Newifi_D2
           Diy-Part1
           Diy-Part1-newifiD2
