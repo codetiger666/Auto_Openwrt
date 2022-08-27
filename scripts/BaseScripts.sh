@@ -11,6 +11,10 @@ Core_x86_64(){
     Author=CodeTiger
 }
 
+Core_Xiaomi_Ac2100(){
+    Author=CodeTiger
+}
+
 Diy-Part1() {
     cd $GITHUB_WORKSPACE/openwrt/package
     mkdir codetiger
@@ -48,6 +52,15 @@ Diy-Part1-newifiD2() {
 }
 
 Diy-Part2() {
+    Date=`date "+%Y%m%d"`
+	mkdir bin/Firmware
+	mv -f bin/targets/ramips/mt7621/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin bin/Firmware/"openwrt-newifi-d2-$Date.bin"
+    _MD5=$(md5sum bin/Firmware/"openwrt-newifi-d2-$Date.bin" | cut -d ' ' -f1)
+    _SHA256=$(sha256sum bin/Firmware/"openwrt-newifi-d2-$Date.bin" | cut -d ' ' -f1)
+    echo -e "\nMD5:${_MD5}\nSHA256:${_SHA256}" > bin/Firmware/"openwrt-newifi-d2-$Date.detail"
+}
+
+Diy-Part2_xiaomi_ac2100() {
     Date=`date "+%Y%m%d"`
 	mkdir bin/Firmware
 	mv -f bin/targets/ramips/mt7621/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin bin/Firmware/"openwrt-newifi-d2-$Date.bin"
