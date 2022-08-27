@@ -48,15 +48,10 @@ jobs:
         run: |
           sudo rm -rf /etc/localtime
           sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-          sudo apt remove php* dotnet* google* 
-          sudo rm -rf \
-            /usr/share/dotnet \
-            /etc/mysql \
-            /etc/php
+          sudo rm -rf /usr/share/dotnet 
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
-          sudo -E apt-get clean
-          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get -y clean autoremove --purge
           cd
           release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}')
           version=$(echo $release | awk -F "." '{print$1}')
