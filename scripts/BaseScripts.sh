@@ -9,6 +9,7 @@ Core_Newifi_D2(){
 
 Core_x86_64(){
     Author=CodeTiger
+    INCLUND_NGINX=true
 }
 
 Core_Xiaomi_Ac2100(){
@@ -19,11 +20,23 @@ Diy-Part1() {
     cd $GITHUB_WORKSPACE/openwrt/package
     mkdir codetiger
     cd codetiger
-    git clone https://github.com/kenzok8/small-package.git
-    git clone https://github.com/jerrykuku/luci-theme-argon.git
-    git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git
-    rm -rf small-package/luci-app-openclash
-    git clone https://github.com/vernesong/OpenClash.git
+    if [ "$DRIVE_LABLE" == "x86_64" ]; 
+    then
+        git clone https://github.com/xiaorouji/openwrt-passwall2.git --dept=1
+        git clone https://github.com/messense/aliyundrive-webdav.git --dept=1
+        git clone https://github.com/messense/aliyundrive-fuse.git --dept=1
+        git clone https://github.com/vernesong/OpenClash.git --dept=1
+        git clone https://github.com/kuoruan/openwrt-frp.git --dept=1
+        git clone https://github.com/jerrykuku/luci-theme-argon.git --dept=1
+        git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
+        git clone https://github.com/xiaorouji/openwrt-passwall.git --dept=1
+    else
+        git clone https://github.com/kenzok8/small-package.git
+        git clone https://github.com/jerrykuku/luci-theme-argon.git
+        git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git
+        rm -rf small-package/luci-app-openclash
+        git clone https://github.com/vernesong/OpenClash.git
+    fi
     echo "$KERNEL_HASH" > $GITHUB_WORKSPACE/openwrt/vermagic
     sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.10.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i 's/${ipaddr:-"192.168.$((addr_offset++)).1"}/${ipaddr:-"10.10.$((addr_offset++)).1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
@@ -42,11 +55,15 @@ Diy-Part1() {
         cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
         /bin/cp $GITHUB_WORKSPACE/Customize/newifiD2_dhcp ./dhcp
     fi
+    if [ "$INCLUND_NGINX" == "true" ]; then
+        cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
+        /bin/cp $GITHUB_WORKSPACE/Customize/nginx ./nginx
+    fi
 }
 
 Diy-Part1-newifiD2() {
-    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files//usr/share/v2ray
-    cd $GITHUB_WORKSPACE/openwrt/package/base-files/files//usr/share/v2ray
+    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/usr/share/v2ray
+    cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/usr/share/v2ray
     wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
     wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
 }
