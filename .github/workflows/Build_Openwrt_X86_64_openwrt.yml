@@ -74,7 +74,6 @@ jobs:
         run: |
           release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
           git clone -b v$release https://github.com/openwrt/openwrt.git
-          # git clone -b openwrt-21.02 https://github.com/openwrt/openwrt.git
       - name: Update & Install Feeds
         run: |
           cd openwrt
@@ -84,6 +83,7 @@ jobs:
         run: |
           source scripts/BaseScripts.sh
           source $HOME/.profile
+          Core_x86_64
           Diy-Part1
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
       - name: make defconfig
@@ -143,11 +143,11 @@ jobs:
 
           
       - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.0
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
         if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
         with:
-          keep_latest: 3
-          delete_tags: true
+          tag_name: openwrt_x86_64 #(required) tag name to delete 
+          delete_release: true #(optional) default: true 
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
