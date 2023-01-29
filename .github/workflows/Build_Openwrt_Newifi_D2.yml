@@ -125,6 +125,16 @@ jobs:
         run: |
           source ../scripts/BaseScripts.sh
           Diy-Part2
+
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
+        with:
+          tag_name: openwrt_newifi_D2 #(required) tag name to delete 
+          delete_release: true #(optional) default: true 
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} 
+
       - name: Upload Firmware to Releases
         uses: softprops/action-gh-release@v1
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
@@ -133,16 +143,6 @@ jobs:
         with:
           tag_name: openwrt_newifi_D2
           files: openwrt/bin/Firmware/*
-
-          
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
-        if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
-        with:
-          tag_name: openwrt_newifi_D2 #(required) tag name to delete 
-          delete_release: true #(optional) default: true 
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Remove workflow runs
         uses: GitRML/delete-workflow-runs@main

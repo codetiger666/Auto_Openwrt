@@ -120,16 +120,7 @@ jobs:
         run: |
           source ../scripts/BaseScripts.sh
           Diy-Part2_xiaomi_ac2100
-      - name: Upload Firmware to Releases
-        uses: softprops/action-gh-release@v1
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          tag_name: openwrt_xiaomi_ac2100
-          files: openwrt/bin/Firmware/*
 
-          
       - name: Remove old Releases
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
         if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
@@ -138,6 +129,15 @@ jobs:
           delete_release: true #(optional) default: true 
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          
+      - name: Upload Firmware to Releases
+        uses: softprops/action-gh-release@v1
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          tag_name: openwrt_xiaomi_ac2100
+          files: openwrt/bin/Firmware/*
 
       - name: Remove workflow runs
         uses: GitRML/delete-workflow-runs@main
