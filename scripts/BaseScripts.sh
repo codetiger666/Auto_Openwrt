@@ -47,6 +47,7 @@ Diy-Part1() {
     sed -i '/3.openwrt.pool.ntp.org/d' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i '/mkhash md5/c\\tcp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' $GITHUB_WORKSPACE/openwrt/include/kernel-defaults.mk
     mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
+    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
     if [ "$Change_Wifi" == "true" ]; then
         cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
         /bin/cp $GITHUB_WORKSPACE/Customize/newifiD2_wireless ./wireless
@@ -59,6 +60,10 @@ Diy-Part1() {
         cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
         /bin/cp $GITHUB_WORKSPACE/Customize/nginx ./nginx
     fi
+    # 服务监听脚本
+    cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
+    /bin/cp $GITHUB_WORKSPACE/scripts/servicewatch ./servicewatch
+    chmod +x ./servicewatch
 }
 
 Diy-Part1-newifiD2() {
