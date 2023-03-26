@@ -127,7 +127,7 @@ jobs:
           Diy-Part2
 
       - name: Remove old Releases
-        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
         if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
         with:
           tag_name: openwrt_newifi_D2 #(required) tag name to delete 
