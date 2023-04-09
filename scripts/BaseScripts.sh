@@ -31,11 +31,11 @@ Diy-Part1() {
         git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
         git clone https://github.com/xiaorouji/openwrt-passwall.git --dept=1
     else
-        git clone https://github.com/kenzok8/small-package.git
-        git clone https://github.com/jerrykuku/luci-theme-argon.git
-        git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git
+        git clone https://github.com/kenzok8/small-package.git --dept=1
+        git clone https://github.com/jerrykuku/luci-theme-argon.git --dept=1
+        git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git --dept=1
         rm -rf small-package/luci-app-openclash
-        git clone https://github.com/vernesong/OpenClash.git
+        git clone https://github.com/vernesong/OpenClash.git --dept=1
     fi
     echo "$KERNEL_HASH" > $GITHUB_WORKSPACE/openwrt/vermagic
     sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.10.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate

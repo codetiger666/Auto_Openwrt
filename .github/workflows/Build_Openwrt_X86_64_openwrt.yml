@@ -53,7 +53,8 @@ jobs:
           sudo rm -rf \
             /usr/share/dotnet \
             /etc/mysql \
-            /etc/php
+            /etc/php \
+            /usr/local/lib/android
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
           sudo -E apt-get clean
