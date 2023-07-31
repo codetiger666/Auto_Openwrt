@@ -16,6 +16,10 @@ Core_Xiaomi_Ac2100(){
     Author=CodeTiger
 }
 
+Core_Redmi_Ax6000(){
+    Author=CodeTigerW
+}
+
 Diy-Part1() {
     cd $GITHUB_WORKSPACE/openwrt/package
     mkdir codetiger
@@ -36,6 +40,7 @@ Diy-Part1() {
         git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git --dept=1
         rm -rf small-package/luci-app-openclash
         git clone https://github.com/vernesong/OpenClash.git --dept=1
+        git clone https://github.com/linkease/istore.git --dept=1
     fi
     echo "$KERNEL_HASH" > $GITHUB_WORKSPACE/openwrt/vermagic
     sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.10.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
@@ -83,6 +88,19 @@ Diy-Part2() {
 }
 
 Diy-Part2_xiaomi_ac2100() {
+    Date=`date "+%Y%m%d"`
+	mkdir bin/Firmware
+	mv -f bin/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mi-router-ac2100-squashfs-sysupgrade.bin bin/Firmware/"openwrt-xiaomi-ac2100-$Date.bin"
+	mv -f bin/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mi-router-ac2100-initramfs-kernel.bin bin/Firmware/"openwrt-xiaomi-ac2100-kernel-$Date.bin"
+    _MD5=$(md5sum bin/Firmware/"openwrt-xiaomi-ac2100-$Date.bin" | cut -d ' ' -f1)
+    _MD5_kernel=$(md5sum bin/Firmware/"openwrt-xiaomi-ac2100-kernel-$Date.bin" | cut -d ' ' -f1)
+    _SHA256=$(sha256sum bin/Firmware/"openwrt-xiaomi-ac2100-$Date.bin" | cut -d ' ' -f1)
+    _SHA256_kernel=$(sha256sum bin/Firmware/"openwrt-xiaomi-ac2100-kernel-$Date.bin" | cut -d ' ' -f1)
+    echo -e "\nMD5:${_MD5}\nSHA256:${_SHA256}" > bin/Firmware/"openwrt-xiaomi-ac2100-$Date.detail"
+    echo -e "\nMD5:${_MD5_kernel}\nSHA256:${_SHA256_kernel}" > bin/Firmware/"openwrt-xiaomi-ac2100-kernel-$Date.detail"
+}
+
+Diy-Part2_redmi_ax6000() {
     Date=`date "+%Y%m%d"`
 	mkdir bin/Firmware
 	mv -f bin/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mi-router-ac2100-squashfs-sysupgrade.bin bin/Firmware/"openwrt-xiaomi-ac2100-$Date.bin"
