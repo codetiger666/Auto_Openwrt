@@ -17,7 +17,7 @@ Core_Xiaomi_Ac2100(){
 }
 
 Core_Redmi_Ax6000(){
-    Author=CodeTigerW
+    Author=CodeTiger
 }
 
 Diy-Part1() {
@@ -26,25 +26,13 @@ Diy-Part1() {
     cd codetiger
     if [ "$DRIVE_LABLE" == "x86_64" ]; 
     then
-        git clone https://github.com/xiaorouji/openwrt-passwall2.git --dept=1
-        git clone https://github.com/messense/aliyundrive-webdav.git --dept=1
-        git clone https://github.com/messense/aliyundrive-fuse.git --dept=1
-        git clone https://github.com/vernesong/OpenClash.git --dept=1
-        git clone https://github.com/kuoruan/openwrt-frp.git --dept=1
-        git clone https://github.com/jerrykuku/luci-theme-argon.git --dept=1
         git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
-        git clone https://github.com/xiaorouji/openwrt-passwall.git --dept=1
     else
         git clone https://github.com/kenzok8/small-package.git --dept=1
-        git clone https://github.com/jerrykuku/luci-theme-argon.git --dept=1
-        git clone https://github.com/KFERMercer/openwrt-baidupcs-web.git --dept=1
-        rm -rf small-package/luci-app-openclash
-        git clone https://github.com/vernesong/OpenClash.git --dept=1
-        git clone https://github.com/linkease/istore.git --dept=1
     fi
     echo "$KERNEL_HASH" > $GITHUB_WORKSPACE/openwrt/vermagic
-    sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.10.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
-    sed -i 's/${ipaddr:-"192.168.$((addr_offset++)).1"}/${ipaddr:-"10.10.$((addr_offset++)).1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
+    sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.128.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
+    sed -i 's/${ipaddr:-"192.168.$((addr_offset++)).1"}/${ipaddr:-"10.128.$((addr_offset++)).1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i "s/timezone='UTC'/timezone='Asia\/Shanghai'/g" $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i 's/0.openwrt.pool.ntp.org/ntp.aliyun.com/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i 's/1.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
