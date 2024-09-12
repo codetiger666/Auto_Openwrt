@@ -13,15 +13,12 @@ on:
         required: true
         default: 'false'
 
-  schedule:
-    - cron: 0 10 * * *
   #push:
   #  branches: [ main ]
   # pull_request:
   #   branches: [ main ]
 
 env:
-  env:
   CONFIG_FILE: redmi_ax6000.config
   DRIVE_LABLE: redmi_ax6000
   UPLOAD_RELEASE: true
@@ -29,6 +26,7 @@ env:
   UPLOAD_BIN_DIR: false
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
+  VSERSION: v23.05.4
   KERNEL_HASH: 7318552cb8f6798b0a6d707a2f563d94
 
 # define workflow
@@ -67,7 +65,7 @@ jobs:
           source .profile
       - name: Clone Openwrt source code
         run: |
-          git clone -b main https://github.com/openwrt/openwrt.git
+          git clone -b $VERSION https://github.com/openwrt/openwrt.git
       - name: Update & Install Feeds
         run: |
           cd openwrt
@@ -79,7 +77,6 @@ jobs:
           source $HOME/.profile
           Core_Redmi_Ax6000
           Diy-Part1
-          # Diy-Part1-newifiD2
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
       - name: make defconfig
         run: |
