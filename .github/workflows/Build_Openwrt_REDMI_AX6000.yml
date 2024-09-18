@@ -65,7 +65,7 @@ jobs:
           source .profile
       - name: Clone Openwrt source code
         run: |
-          git clone -b $VERSION https://github.com/codetiger666/openwrt-auto.git
+          git clone -b $VERSION https://github.com/codetiger666/openwrt-auto.git openwrt
       - name: Update & Install Feeds
         run: |
           cd openwrt
