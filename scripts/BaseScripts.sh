@@ -23,16 +23,18 @@ Core_Redmi_Ax6000(){
 Diy-Part1() {
     cd $GITHUB_WORKSPACE/openwrt/package
     mkdir codetiger
-    cd codetiger
-    if [ "$DRIVE_LABLE" == "x86_64" ]; 
-    then
-        git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
-    else
-        cd $GITHUB_WORKSPACE/openwrt
-	cp -af ./feeds/mtk_openwrt_feed/master/files/* .
-        for file in $(find ./feeds/mtk_openwrt_feed/master/patches-base -name "*.patch" | sort); do patch -f -p1 -i ${file}; done
-        # git clone https://github.com/kenzok8/small-package.git --dept=1
-    fi
+    # mtk私有
+    cd $GITHUB_WORKSPACE/openwrt
+    cp -af ./feeds/mtk_openwrt_feed/master/files/* .
+    for file in $(find ./feeds/mtk_openwrt_feed/master/patches-base -name "*.patch" | sort); do patch -f -p1 -i ${file} > /etc/null 2>&1 &; done
+    cd $GITHUB_WORKSPACE/openwrt/package/codetiger
+    # smartdns
+    git clone https://github.com/pymumu/openwrt-smartdns.git
+    git clone https://github.com/pymumu/luci-app-smartdns.git
+    # ddns-go
+    git clone https://github.com/sirpdboy/luci-app-ddns-go.git
+    # mihomo
+    git clone https://github.com/morytyann/OpenWrt-mihomo.git
     # 获取kernel 指纹
     curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
     cat kernel.manifest | grep kernel | awk -F '-' '{print $NF}' > $GITHUB_WORKSPACE/openwrt/vermagic
