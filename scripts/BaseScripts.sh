@@ -28,7 +28,7 @@ Diy-Part1() {
     then
         git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
     else
-        git clone https://github.com/kenzok8/small-package.git --dept=1
+        # git clone https://github.com/kenzok8/small-package.git --dept=1
     fi
     # 获取kernel 指纹
     curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
