@@ -28,6 +28,7 @@ Diy-Part1() {
     then
         git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
     else
+        echo "123"
         # git clone https://github.com/kenzok8/small-package.git --dept=1
     fi
     # 获取kernel 指纹
