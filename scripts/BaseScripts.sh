@@ -28,7 +28,9 @@ Diy-Part1() {
     then
         git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
     else
-        echo "123"
+        cd $GITHUB_WORKSPACE/openwrt
+	cp -af ./feeds/mtk_openwrt_feed/master/files/* .
+        for file in $(find ./feeds/mtk_openwrt_feed/master/patches-base -name "*.patch" | sort); do patch -f -p1 -i ${file}; done
         # git clone https://github.com/kenzok8/small-package.git --dept=1
     fi
     # 获取kernel 指纹
