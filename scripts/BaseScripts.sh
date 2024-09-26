@@ -25,10 +25,6 @@ Diy-Part1() {
     mkdir codetiger
     # mtk私有
     cd $GITHUB_WORKSPACE/openwrt
-    cp -af ./feeds/mtk_openwrt_feed/master/files/* .
-    for file in $(find ./feeds/mtk_openwrt_feed/master/patches-base -name "*.patch" | sort); do
-        patch -f -p1 -i "${file}" > /dev/null 2>&1
-    done
     cd $GITHUB_WORKSPACE/openwrt/package/codetiger
     # smartdns
     git clone https://github.com/pymumu/openwrt-smartdns.git
