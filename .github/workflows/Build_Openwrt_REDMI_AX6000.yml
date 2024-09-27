@@ -113,29 +113,29 @@ jobs:
           name: OpenWrt_Firmware_${{ env.Artifacts_DATE }}
           path: openwrt/bin
           
-      # - name: copy file to Releases
-      #   working-directory: ./openwrt
-      #   run: |
-      #     source ../scripts/BaseScripts.sh
-      #     Diy-Part2_xiaomi_ac2100
+      - name: copy file to Releases
+        working-directory: ./openwrt
+        run: |
+          source ../scripts/BaseScripts.sh
+          Diy-Part2_redmi_ax6000
 
-      # - name: Remove old Releases
-      #   uses: dev-drprasad/delete-tag-and-release@v0.2.1
-      #   if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
-      #   with:
-      #     tag_name: openwrt_xiaomi_ac2100 #(required) tag name to delete 
-      #     delete_release: true #(optional) default: true 
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
+        with:
+          tag_name: openwrt_redmi_ax6000 #(required) tag name to delete 
+          delete_release: true #(optional) default: true 
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           
-      # - name: Upload Firmware to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      #   with:
-      #     tag_name: openwrt_xiaomi_ac2100
-      #     files: openwrt/bin/Firmware/*
+      - name: Upload Firmware to Releases
+        uses: softprops/action-gh-release@v1
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+         tag_name: openwrt_redmi_ax6000
+         files: openwrt/bin/Firmware/*
 
       - name: Remove workflow runs
         uses: GitRML/delete-workflow-runs@main
