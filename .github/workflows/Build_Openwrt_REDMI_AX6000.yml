@@ -26,7 +26,7 @@ env:
   UPLOAD_BIN_DIR: false
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
-  VERSION: v23.05.4
+  VERSION: openwrt-23.05
   KERNEL_HASH: 7318552cb8f6798b0a6d707a2f563d94
 
 # define workflow
