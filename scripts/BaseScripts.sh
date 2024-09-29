@@ -58,10 +58,8 @@ Diy-Part1() {
         cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
         /bin/cp $GITHUB_WORKSPACE/Customize/newifiD2_dhcp ./dhcp
     fi
-    if [ "$INCLUND_NGINX" == "true" ]; then
-        cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
-        /bin/cp $GITHUB_WORKSPACE/Customize/nginx ./nginx
-    fi
+    cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
+    /bin/cp $GITHUB_WORKSPACE/Customize/nginx ./nginx
     # 服务监听脚本
     cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
     /bin/cp $GITHUB_WORKSPACE/scripts/servicewatch ./servicewatch

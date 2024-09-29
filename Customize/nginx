@@ -1,5 +1,4 @@
-
-config main 'global'
+config main global
         option uci_enable 'true'
 
 config server '_lan'
@@ -15,9 +14,11 @@ config server '_lan'
         option ssl_session_timeout '64m'
         option access_log 'off; # logd openwrt'
 
-config server '_redirect2ssl'
+config server '_lan_80'
         list listen '80'
         list listen '[::]:80'
-        option server_name '_redirect2ssl'
+        option server_name '_lan'
         list include 'restrict_locally'
         list include 'conf.d/*.locations'
+        option uci_manage_ssl 'self-signed'
+        option access_log 'off; # logd openwrt'
