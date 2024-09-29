@@ -27,12 +27,16 @@ Diy-Part1() {
     cd $GITHUB_WORKSPACE/openwrt
     cd $GITHUB_WORKSPACE/openwrt/package/codetiger
     # smartdns
-    git clone https://github.com/pymumu/openwrt-smartdns.git
-    git clone https://github.com/pymumu/luci-app-smartdns.git
+    git clone https://github.com/pymumu/openwrt-smartdns.git --dept=1
+    git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
     # ddns-go
-    git clone https://github.com/sirpdboy/luci-app-ddns-go.git
+    git clone https://github.com/sirpdboy/luci-app-ddns-go.git --dept=1
     # mihomo
-    git clone https://github.com/morytyann/OpenWrt-mihomo.git
+    git clone https://github.com/morytyann/OpenWrt-mihomo.git --dept=1
+    # fackmesh 使用x-wrt源码
+    git clone https://github.com/x-wrt/com.x-wrt.git --dept=1
+    mv com.x-wrt/luci-app-fakemesh/ ./
+    m -rf com.x-wrt/
     # 获取kernel 指纹
     curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
     cat kernel.manifest | grep kernel | awk -F '-' '{print $NF}' > $GITHUB_WORKSPACE/openwrt/vermagic
