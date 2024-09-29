@@ -134,7 +134,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
-         tag_name: openwrt_redmi_ax6000
+         tag_name: RedmiAX6000_${{ env.Artifacts_DATE }}
          files: openwrt/bin/Firmware/*
 
       - name: Remove workflow runs
