@@ -65,6 +65,8 @@ Diy-Part1() {
     mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set
     wget https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/cn
     wget https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/ad
+    /bin/cp $GITHUB_WORKSPACE/Customize/smartdns_customer $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/custom.conf
+    /bin/cp $GITHUB_WORKSPACE/Customize/smartdns $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/smartdns
     # 服务监听脚本
     cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
     /bin/cp $GITHUB_WORKSPACE/scripts/servicewatch ./servicewatch
