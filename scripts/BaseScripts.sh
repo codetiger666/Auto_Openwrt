@@ -58,8 +58,13 @@ Diy-Part1() {
         cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
         /bin/cp $GITHUB_WORKSPACE/Customize/newifiD2_dhcp ./dhcp
     fi
+    # nginx配置文件
     cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
     /bin/cp $GITHUB_WORKSPACE/Customize/nginx ./nginx
+    # smartdns域名规则
+    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set
+    wget https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/cn
+    wget https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/ad
     # 服务监听脚本
     cd $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
     /bin/cp $GITHUB_WORKSPACE/scripts/servicewatch ./servicewatch
