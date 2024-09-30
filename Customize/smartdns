@@ -1,0 +1,70 @@
+config smartdns
+        option enabled '1'
+        option server_name 'smartdns'
+        option port '5333'
+        option auto_set_dnsmasq '1'
+        option tcp_server '1'
+        option tls_server '0'
+        option doh_server '0'
+        option ipv6_server '1'
+        option bind_device '0'
+        option dualstack_ip_selection '1'
+        option serve_expired '0'
+        option cache_persist '0'
+        option resolve_local_hostnames '1'
+        option force_https_soa '1'
+        option rr_ttl_min '600'
+        option seconddns_port '6553'
+        option seconddns_tcp_server '1'
+        option log_output_mode 'syslog'
+        option speed_check_mode 'tcp:443,tcp:80,ping'
+        option response_mode 'fastest-ip'
+        option cache_size '0'
+        option enable_auto_update '1'
+        option auto_update_week_time '*'
+        option auto_update_day_time '5'
+        option old_port '5333'
+        option old_enabled '1'
+        option old_auto_set_dnsmasq '1'
+
+config domain-rule
+
+config client-rule
+        option enabled '0'
+        option dualstack_ip_selection '1'
+        option force_https_soa '1'
+
+config ip-rule
+
+config server
+        option enabled '1'
+        option name '阿 里 云 '
+        option ip '223.5.5.5'
+        option type 'udp'
+        option server_group 'cn'
+        option exclude_default_group '1'
+
+config server
+        option enabled '1'
+        option name '腾 讯 云 '
+        option ip '119.29.29.29'
+        option type 'udp'
+        option server_group 'cn'
+        option exclude_default_group '1'
+
+config server
+        option enabled '1'
+        option name '本 地 '
+        option ip '127.0.0.1'
+        option port '7874'
+        option type 'udp'
+
+config download-file
+        option name 'cn'
+        option url 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt'
+        option type 'list'
+
+config download-file
+        option name 'ad'
+        option url 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt'
+        option type 'list'
