@@ -1,0 +1,7 @@
+#!/bin/bash
+if test $(ps | grep  $1 | wc -l) -lt 2; then
+        echo $(ps | grep  $1 | wc -l)
+        #service $1 start;
+else
+        echo "$1存活";
+fi
