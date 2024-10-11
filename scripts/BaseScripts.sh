@@ -98,8 +98,8 @@ Diy-Part2_xiaomi_ac2100() {
 Diy-Part2_redmi_ax6000() {
     Date=`date "+%Y%m%d"`
 	mkdir bin/Firmware
-	mv -f bin/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootmod-squashfs-sysupgrade.bin bin/Firmware/"openwrt-redmi-ax6000-$Date.bin"
-	mv -f bin/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootmod-initramfs-kernel.bin bin/Firmware/"openwrt-redmi-ax6000-kernel-$Date.bin"
+	mv -f bin/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootlayout-squashfs-sysupgrade.bin bin/Firmware/"openwrt-redmi-ax6000-$Date.bin"
+	mv -f bin/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootlayout-initramfs-kernel.bin bin/Firmware/"openwrt-redmi-ax6000-kernel-$Date.bin"
     _MD5=$(md5sum bin/Firmware/"openwrt-redmi-ax6000-$Date.bin" | cut -d ' ' -f1)
     _MD5_kernel=$(md5sum bin/Firmware/"openwrt-redmi-ax6000-init-$Date.bin" | cut -d ' ' -f1)
     _SHA256=$(sha256sum bin/Firmware/"openwrt-redmi-ax6000-$Date.bin" | cut -d ' ' -f1)
