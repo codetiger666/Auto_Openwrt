@@ -27,7 +27,6 @@ env:
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
   VERSION: 23.05.5
-  KERNEL_HASH: 7318552cb8f6798b0a6d707a2f563d94
 
 # define workflow
 jobs:
@@ -56,11 +55,14 @@ jobs:
           sudo -E apt-get clean
           sudo -E apt-get -y autoremove --purge
           cd
-          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
-          version=$(echo $release | awk -F "." '{print$1}')
-          tag=$(echo $release | awk -F "." '{print$2}')
-          echo "export openwrt_tag=$release" >> .profile
+          # release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
+          # version=$(echo $release | awk -F "." '{print$1}')
+          version=$VERSION
+          #tag=$(echo $release | awk -F "." '{print$2}')
+          tag=$VERSION
+          echo "export openwrt_tag=$VERSION" >> .profile
           echo "export DRIVE_LABLE=$DRIVE_LABLE" >> .profile
+          KERNEL_HASH=`curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest | grep kernel | awk -F "-" '{print $4}'`
           echo "export KERNEL_HASH=$KERNEL_HASH" >> .profile
           source .profile
       - name: Clone Openwrt source code

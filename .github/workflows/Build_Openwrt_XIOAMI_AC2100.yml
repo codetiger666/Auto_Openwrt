@@ -29,7 +29,7 @@ env:
   UPLOAD_BIN_DIR: false
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
-  KERNEL_HASH: 7318552cb8f6798b0a6d707a2f563d94
+  VERSION: 23.05.5
 
 # define workflow
 jobs:
@@ -58,13 +58,13 @@ jobs:
           sudo -E apt-get clean
           sudo -E apt-get -y autoremove --purge
           cd
-          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
-          version=$(echo $release | awk -F "." '{print$1}')
-          tag=$(echo $release | awk -F "." '{print$2}')
-          if (( $(echo "${version} == 21") & $(echo "${tag} == 02") )); then
-              KERNEL_HASH=`curl https://downloads.openwrt.org/releases/$release/targets/ramips/mt7621/openwrt-$release-ramips-mt7621.manifest | grep kernel | awk -F "-" '{print $4}'`
-          fi
-          echo "export openwrt_tag=$release" >> .profile
+          # release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
+          # version=$(echo $release | awk -F "." '{print$1}')
+          version=$VERSION
+          # tag=$(echo $release | awk -F "." '{print$2}')
+          tag=$VERSION
+          KERNEL_HASH=`curl https://downloads.openwrt.org/releases/$VERSION/targets/ramips/mt7621/openwrt-$VERSION-ramips-mt7621.manifest | grep kernel | awk -F "-" '{print $4}'`
+          echo "export openwrt_tag=$VERSION" >> .profile
           echo "export DRIVE_LABLE=$DRIVE_LABLE" >> .profile
           echo "export KERNEL_HASH=$KERNEL_HASH" >> .profile
           source .profile
