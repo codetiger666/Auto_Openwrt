@@ -70,8 +70,7 @@ jobs:
           source .profile
       - name: Clone Openwrt source code
         run: |
-          release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
-          git clone -b v$release https://github.com/openwrt/openwrt.git
+          git clone -b $VERSION https://github.com/openwrt/openwrt.git openwrt
       - name: Update & Install Feeds
         run: |
           cd openwrt
