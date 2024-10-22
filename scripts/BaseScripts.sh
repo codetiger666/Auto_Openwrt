@@ -29,6 +29,11 @@ Diy-Part1() {
     # smartdns
     git clone https://github.com/pymumu/openwrt-smartdns.git --dept=1
     git clone https://github.com/pymumu/luci-app-smartdns.git --dept=1
+    # 添加默认配置
+    mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set
+    wget -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/cn https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
+    wget -O $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/domain-set/ad https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt
+    /bin/cp  $GITHUB_WORKSPACE/Customize/smartdns_customer $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/smartdns/custom.conf
     # ddns-go
     git clone https://github.com/sirpdboy/luci-app-ddns-go.git --dept=1
     # mihomo

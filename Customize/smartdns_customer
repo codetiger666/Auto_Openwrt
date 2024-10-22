@@ -1,0 +1,6 @@
+# Add custom settings here.
+# please read https://pymumu.github.io/smartdns/config/basic-config/
+domain-set -name ad -file /etc/smartdns/domain-set/ad
+domain-set -name cn -file /etc/smartdns/domain-set/cn
+domain-rules /domain-set:ad/#
+domain-rules /domain-set:cn/ -group cn
