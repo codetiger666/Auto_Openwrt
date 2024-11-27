@@ -26,7 +26,7 @@ env:
   UPLOAD_BIN_DIR: false
   REMOVE_OLD_RELEASE: true
   REMOVE_WORKFLOW_RUNS: true
-  VERSION: 24.10
+  VERSION: '24.10'
 
 # define workflow
 jobs:
