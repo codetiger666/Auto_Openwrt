@@ -43,8 +43,8 @@ Diy-Part1() {
     mv x/luci-app-fakemesh/ ./
     rm -rf x/
     # 获取kernel 指纹
-    curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
-    cat kernel.manifest | grep kernel | awk -F '-' '{print $NF}' > $GITHUB_WORKSPACE/openwrt/vermagic
+    # curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
+    # cat kernel.manifest | grep kernel | awk -F '-' '{print $NF}' > $GITHUB_WORKSPACE/openwrt/vermagic
     sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.128.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i 's/${ipaddr:-"192.168.$((addr_offset++)).1"}/${ipaddr:-"10.128.$((addr_offset++)).1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i "s/timezone='UTC'/timezone='Asia\/Shanghai'/g" $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
