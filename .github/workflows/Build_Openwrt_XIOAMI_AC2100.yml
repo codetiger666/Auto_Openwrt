@@ -43,7 +43,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          curl https://raw.githubusercontent.com/codetiger666/linux/51925ab1e8ade75dcfbe64da34beb56f6c0299b7/scripts/linux/init-github-ubuntu | bash
+          curl https://raw.githubusercontent.com/codetiger666/linux/refs/heads/master/scripts/linux/init-github-ubuntu | bash
           version=$VERSION
           # tag=$(echo $release | awk -F "." '{print$2}')
           tag=$VERSION
