@@ -43,20 +43,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo rm -rf /etc/localtime
-          sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-          sudo rm -rf \
-            /usr/share/dotnet \
-            /etc/mysql \
-            /etc/php \
-            /usr/local/lib/android 
-          sudo -E apt-get -qq update
-          sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
-          sudo -E apt-get clean
-          sudo -E apt-get -y autoremove --purge
-          cd
-          # release=$(curl https://api.github.com/repos/openwrt/openwrt/releases/latest | grep tag_name | awk 'END {print}' | awk -F ":" '{print $2}' | awk -F "[\"\"]" '{print $2}' | awk -F "v" '{print $2}')
-          # version=$(echo $release | awk -F "." '{print$1}')
+          curl https://raw.githubusercontent.com/codetiger666/linux/51925ab1e8ade75dcfbe64da34beb56f6c0299b7/scripts/linux/init-github-ubuntu | bash
           version=$VERSION
           # tag=$(echo $release | awk -F "." '{print$2}')
           tag=$VERSION
