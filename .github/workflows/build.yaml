@@ -113,7 +113,7 @@ jobs:
 
       - name: copy file to Releases
         run: |
-          source ../scripts/BaseScripts.sh
+          source scripts/BaseScripts.sh
           source $HOME/.profile
           devices=("redmi_ax6000" "xiaomi_ac2100")
           for device in "${devices[@]}"; do
