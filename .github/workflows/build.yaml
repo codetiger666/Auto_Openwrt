@@ -21,10 +21,9 @@ on:
           - 'true'
           - 'false'
 
-# define workflow
 jobs:
   build:
-    name: build ${{ matrix.device }
+    name: build ${{ matrix.device }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
