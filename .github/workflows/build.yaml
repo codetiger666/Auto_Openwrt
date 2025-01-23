@@ -1,0 +1,137 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build_Openwrt_REDMI_AX6000
+
+# The type of start
+on:
+
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本'
+        required: true
+        default: '24.10'
+      ssh:
+        description: '是否开启ssh调试'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+# define workflow
+jobs:
+  build:
+    name: build ${{ matrix.device }
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+          - redmi_ax6000
+          - xiaomi_ac2100
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      # 初始化环境变量
+      - name: ${{ matrix.device }} init-env
+        run: |
+          echo "export project_version=${{ github.event.inputs.version }}" >> $HOME/.profile
+          source $HOME/.profile
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          curl https://raw.githubusercontent.com/codetiger666/linux/refs/heads/master/scripts/linux/init-github-ubuntu | bash
+
+      - name: ${{ matrix.device }} Clone Openwrt source code
+        run: |
+          git clone -b ${{ github.event.inputs.version }} https://github.com/codetiger666/openwrt.git openwrt
+
+      - name: ${{ matrix.device }} Update & Install Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: ${{ matrix.device }} Run Diy-Part1 Scripts
+        run: |
+          source scripts/BaseScripts.sh
+          source $HOME/.profile
+          Core_${{ matrix.device }}
+          Diy-Part1
+          echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+      - name: ${{ matrix.device }} make defconfig
+        run: |
+          [ -f ${{ matrix.device }}.config ] && mv ${{ matrix.device }}.config openwrt/.config
+          cd openwrt
+          make defconfig
+
+      - name: ${{ matrix.device }} SSH connection to Actions
+        uses: P3TERX/ssh2actions@main
+        if: github.event.inputs.ssh == 'true'
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+      - name: ${{ matrix.device }} Download Packages
+        working-directory: ./openwrt
+        run: |
+          make download -j V=s
+
+      - name: ${{ matrix.device }} Compile the Openwrt
+        working-directory: ./openwrt
+        run: |
+          make -j$(nproc) V=s
+
+      - name: ${{ matrix.device }} Recompile the Openwrt
+        working-directory: ./openwrt
+        if: failure()
+        run: |
+          make -j1 V=s
+
+      - name: Upload Firmware to Artifacts
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ matrix.device }}
+          path: openwrt/bin
+
+
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: copy file to Releases
+        run: |
+          source ../scripts/BaseScripts.sh
+          source $HOME/.profile
+          devices=("redmi_ax6000" "xiaomi_ac2100")
+          for device in "${devices[@]}"; do
+            Diy-Part2_$device
+          done
+
+      - name: Upload Firmware to Releases
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          tag_name: openwrt-${{ github.event.inputs.version }}-$(date +"%Y%m%d%H%M")
+          files: release/*
+
+      - name: Remove workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        if: env.REMOVE_WORKFLOW_RUNS == 'true' && !cancelled()
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
