@@ -69,7 +69,7 @@ Diy-Part1() {
 
 Diy-Part2_xiaomi_ac2100() {
     Date=`date "+%Y%m%d%H%M"`
-	mkdir release
+	mkdir release || true
 	mv -f artifacts/xiaomi_ac2100/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mi-router-ac2100-squashfs-sysupgrade.bin release/"openwrt-xiaomi-ac2100-${project_version}-$Date.bin"
 	mv -f artifacts/xiaomi_ac2100/targets/ramips/mt7621/openwrt-ramips-mt7621-xiaomi_mi-router-ac2100-initramfs-kernel.bin release/"openwrt-xiaomi-ac2100-kernel-${project_version}-$Date.bin"
     _MD5=$(md5sum release/"openwrt-xiaomi-ac2100-${project_version}-$Date.bin" | cut -d ' ' -f1)
@@ -82,7 +82,7 @@ Diy-Part2_xiaomi_ac2100() {
 
 Diy-Part2_redmi_ax6000() {
     Date=`date "+%Y%m%d%H%M"`
-	mkdir release
+	mkdir release || true
 	mv -f artifacts/redmi_ax6000/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootlayout-squashfs-sysupgrade.bin release/"openwrt-redmi-ax6000-${project_version}-$Date.bin"
 	mv -f artifacts/redmi_ax6000/targets/mediatek/filogic/openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootlayout-initramfs-kernel.bin release/"openwrt-redmi-ax6000-kernel-${project_version}-$Date.bin"
     _MD5=$(md5sum release/"openwrt-redmi-ax6000-${project_version}-$Date.bin" | cut -d ' ' -f1)
