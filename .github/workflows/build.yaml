@@ -95,7 +95,7 @@ jobs:
           make -j1 V=s
 
       - name: Upload Firmware to Artifacts
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.device }}
           path: openwrt/bin
