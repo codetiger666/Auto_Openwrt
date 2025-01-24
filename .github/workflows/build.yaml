@@ -60,8 +60,8 @@ jobs:
 
       - name: ${{ matrix.device }} Run Diy-Part1 Scripts
         run: |
-          source scripts/BaseScripts.sh
           source $HOME/.profile
+          source scripts/BaseScripts.sh
           Core_${{ matrix.device }}
           Diy-Part1
           echo "Artifacts_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
