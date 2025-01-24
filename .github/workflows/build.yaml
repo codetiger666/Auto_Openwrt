@@ -39,6 +39,7 @@ jobs:
       - name: ${{ matrix.device }} init-env
         run: |
           echo "export project_version=${{ github.event.inputs.version }}" >> $HOME/.profile
+          echo "RELEASE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
           source $HOME/.profile
 
       - name: Initialization environment
@@ -124,11 +125,9 @@ jobs:
           done
 
       - name: Upload Firmware to Releases
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        uses: softprops/action-gh-release@master
         with:
-          tag_name: openwrt-${{ github.event.inputs.version }}-$(date +"%Y%m%d%H%M")
+          tag_name: openwrt-${{ github.event.inputs.version }}-${{ env.RELEASE_DATE }}
           files: release/*
 
       - name: Remove workflow runs
