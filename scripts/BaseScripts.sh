@@ -1,6 +1,4 @@
 #!/bin/bash
-# https://github.com/nieningproj/AutoBuild_Openwrt
-
 
 Core_x86_64(){
     Author=CodeTiger
