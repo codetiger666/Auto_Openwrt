@@ -132,7 +132,6 @@ jobs:
 
       - name: Remove workflow runs
         uses: GitRML/delete-workflow-runs@main
-        if: env.REMOVE_WORKFLOW_RUNS == 'true' && !cancelled()
         with:
           retain_days: 1
           keep_minimum_runs: 3
