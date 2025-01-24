@@ -113,6 +113,7 @@ jobs:
       - name: Init ENV
         run: |
            echo "RELEASE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+           echo "export project_version=${{ github.event.inputs.version }}" >> $HOME/.profile
 
       - name: download artifact
         uses: actions/download-artifact@main
