@@ -131,6 +131,8 @@ jobs:
       - name: Upload Firmware to Releases
         uses: softprops/action-gh-release@master
         with:
+          draft: false
+          make_latest: true
           tag_name: openwrt-${{ github.event.inputs.version }}-${{ env.RELEASE_DATE }}
           files: release/*
 
