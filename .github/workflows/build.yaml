@@ -109,7 +109,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main 
-          
+
+      - name: Init ENV
+        run: |
+           echo "RELEASE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV 
+
       - name: download artifact
         uses: actions/download-artifact@main
         with:
