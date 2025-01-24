@@ -134,6 +134,7 @@ jobs:
         with:
           draft: false
           make_latest: true
+          target_commitish: ${{ github.sha }}
           tag_name: openwrt-${{ github.event.inputs.version }}-${{ env.RELEASE_DATE }}
           files: release/*
 
