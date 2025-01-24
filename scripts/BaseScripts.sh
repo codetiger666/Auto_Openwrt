@@ -90,7 +90,7 @@ Diy-Part2_redmi_ax6000() {
     _SHA256=$(sha256sum release/"openwrt-redmi-ax6000-${project_version}-$Date.bin" | cut -d ' ' -f1)
     _SHA256_kernel=$(sha256sum release/"openwrt-redmi-ax6000-kernel-${project_version}-$Date.bin" | cut -d ' ' -f1)
     echo -e "\nMD5:${_MD5}\nSHA256:${_SHA256}" > release/"openwrt-redmi-ax6000-${project_version}-$Date.detail"
-    echo -e "\nMD5:${_MD5_kernel}\nSHA256:${_SHA256_kernel}" > release/"openwrt-redmi-ax6000-init-${project_version}-$Date.detail"
+    echo -e "\nMD5:${_MD5_kernel}\nSHA256:${_SHA256_kernel}" > release/"openwrt-redmi-ax6000-kernel-${project_version}-$Date.detail"
 }
 
 Diy-Part2_x86_64() {
