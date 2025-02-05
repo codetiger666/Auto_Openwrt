@@ -39,6 +39,7 @@ jobs:
       - name: ${{ matrix.device }} init-env
         run: |
           echo "export project_version=${{ github.event.inputs.version }}" >> $HOME/.profile
+          echo "export project_device=${{ matrix.device }}" >> $HOME/.profile
           echo "RELEASE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
           source $HOME/.profile
 
