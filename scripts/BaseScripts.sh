@@ -36,8 +36,13 @@ Diy-Part1() {
     mv x/luci-app-fakemesh/ ./
     rm -rf x/
     # 获取kernel 指纹
-    # curl https://downloads.openwrt.org/releases/$VERSION/targets/mediatek/filogic/openwrt-$VERSION-mediatek-filogic.manifest > kernel.manifest
-    # cat kernel.manifest | grep kernel | awk -F '-' '{print $NF}' > $GITHUB_WORKSPACE/openwrt/vermagic
+    if [ "${project_device}" = "redmi_ax6000" ]; then
+     curl https://downloads.openwrt.org/releases/${project_version}/targets/mediatek/filogic/openwrt-${project_version}-mediatek-filogic.manifest > kernel.manifest
+    fi
+    if [ "${project_device}" = "xiaomi_ac2100" ]; then
+     curl https://downloads.openwrt.org/releases/${project_version}/targets/ramips/mt7621/openwrt-${project_version}-ramips-mt7621.manifest > kernel.manifest
+    fi
+    cat kernel.manifest | grep kernel | grep kernel | awk -F'~|-' '{print $3}' > $GITHUB_WORKSPACE/openwrt/vermagic
     sed -i 's/${ipaddr:-"192.168.1.1"}/${ipaddr:-"10.128.1.1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i 's/${ipaddr:-"192.168.$((addr_offset++)).1"}/${ipaddr:-"10.128.$((addr_offset++)).1"}/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i "s/timezone='UTC'/timezone='Asia\/Shanghai'/g" $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
@@ -45,7 +50,7 @@ Diy-Part1() {
     sed -i 's/1.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i '/2.openwrt.pool.ntp.org/d' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
     sed -i '/3.openwrt.pool.ntp.org/d' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
-    sed -i '/mkhash md5/c\\tcp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' $GITHUB_WORKSPACE/openwrt/include/kernel-defaults.mk
+    #sed -i '/mkhash md5/c\\tcp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' $GITHUB_WORKSPACE/openwrt/include/kernel-defaults.mk
     mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/config
     mkdir -p $GITHUB_WORKSPACE/openwrt/package/base-files/files/etc/codetiger
     if [ "$Change_Wifi" == "true" ]; then
